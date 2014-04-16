@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="k2q-6B-7AU">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller - 文件-->
+        <scene sceneID="Xd9-RF-8lU">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="LbS-Az-dWp" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="文件" image="1.png" id="jDp-yd-Oqa"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yMf-BU-wDh">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="EcD-78-L57" kind="relationship" relationship="rootViewController" id="fXR-Hq-8u9"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LCW-hT-OCH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="167" y="43"/>
+        </scene>
+        <!--Login Web View Controller - 网盘登陆-->
+        <scene sceneID="leD-ci-Ebx">
+            <objects>
+                <viewController id="EcD-78-L57" customClass="LoginWebViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GJU-rt-U7G"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ogf-H8-UUQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="rb0-Lm-OFU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fm4-5m-G9X">
+                                <rect key="frame" x="20" y="75" width="80" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="dropbox.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="didPressLinkDropBox" destination="EcD-78-L57" eventType="touchUpInside" id="Nih-Cl-Mt5"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Dropbox" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhm-zm-XVa">
+                                <rect key="frame" x="27" y="157" width="67" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="网盘登陆" id="UB1-Gt-YNf"/>
+                    <connections>
+                        <segue destination="3I1-Xy-fNE" kind="push" identifier="login" id="Cau-kE-isy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fcV-FT-2st" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="574" y="43"/>
+        </scene>
+        <!--Explorer View Controller-->
+        <scene sceneID="71J-v4-KzO">
+            <objects>
+                <viewController id="3I1-Xy-fNE" customClass="ExplorerViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5zW-rK-pTQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="HdN-OX-Ibn"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uNv-eP-ZVT">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Rvt-xu-gQI"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kbg-SD-aaP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="975" y="43"/>
+        </scene>
+        <!--Navigation Controller - 上传-->
+        <scene sceneID="cRv-AI-c2y">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="7no-D4-eJI" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="上传" image="2.png" id="uDY-mq-VV3"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="E9X-d7-YnZ">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="uLg-gL-XQr" kind="relationship" relationship="rootViewController" id="2QH-cB-sVy"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L4I-D5-jc0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="167" y="748"/>
+        </scene>
+        <!--Upload View Controller - 上传列表-->
+        <scene sceneID="XH4-EP-pJA">
+            <objects>
+                <viewController id="uLg-gL-XQr" customClass="UploadViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="OT2-Xw-PX2"/>
+                        <viewControllerLayoutGuide type="bottom" id="h3G-KS-SQK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ekk-hn-JXU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="上传列表" id="oe6-cg-0dA"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qd4-pP-K7i" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="574" y="748"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="q8Y-C5-LiO">
+            <objects>
+                <tabBarController definesPresentationContext="YES" id="k2q-6B-7AU" sceneMemberID="viewController">
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="Kdj-s0-DkX">
+                        <rect key="frame" x="129" y="330" width="163" height="49"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="LbS-Az-dWp" kind="relationship" relationship="viewControllers" id="m0b-9D-o53"/>
+                        <segue destination="7no-D4-eJI" kind="relationship" relationship="viewControllers" id="cZt-wF-vZo"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LoG-wV-Q1I" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-367" y="401"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="1.png" width="30" height="30"/>
+        <image name="2.png" width="30" height="30"/>
+        <image name="dropbox.png" width="160" height="160"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

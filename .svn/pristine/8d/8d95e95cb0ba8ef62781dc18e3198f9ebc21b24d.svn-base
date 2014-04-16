@@ -1,0 +1,31 @@
+//
+//  WebDiskAdapter.m
+//  WebDisk
+//
+//  Created by ccnyou on 14-4-1.
+//  Copyright (c) 2014年 ccnyou. All rights reserved.
+//
+
+#import "WebDiskAdapter.h"
+//
+//@implementation WebDiskSession
+//
+//static WebDiskSession* g_instance = nil;
+//
+//+ (id)allocWithZone:(struct _NSZone *)zone
+//{
+//    NSLog(@"%s %d error: should not create this instance", __FUNCTION__, __LINE__);
+//    return g_instance;
+//}
+//
+//+ (void)initWithAdapter:(id<WebDiskAdapter>)adapter
+//{
+//    g_instance = [adapter session];
+//}
+//
+//+ (WebDiskSession *)sharedSession
+//{
+//    return g_instance;
+//}
+//
+//@end
