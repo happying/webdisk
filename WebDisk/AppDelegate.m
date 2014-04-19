@@ -19,6 +19,10 @@
     //self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
+       NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docspath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+        NSLog(@"%@",docspath);
+    
 #if !TARGET_IPHONE_SIMULATOR
     NSURL* appUrl = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
     NSString* logPath = [[appUrl path] stringByAppendingPathComponent:@"webdisk.log.txt"];

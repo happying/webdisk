@@ -10,6 +10,9 @@
 #import "ExplorerViewController.h"
 #import "WebDiskAdapter.h"
 #import "MBProgressHUD.h"
+#import "ZipArchive.h"
+#import "AESCrypt.h"
+
 
 @interface UploadViewController () <WebDiskClientDelegate, MBProgressHUDDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -37,6 +40,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     _uploadingFiles = [[NSMutableArray alloc] init];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -82,6 +86,42 @@
     NSString *localDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     NSString *localPath = [localDir stringByAppendingPathComponent:filename];
     [text writeToFile:localPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    
+    
+    ZipArchive *zip = [[ZipArchive alloc] init];
+    // Documents文件夹的路径写法
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentPath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+    // 原文件路径
+    NSString *filePath = [documentPath stringByAppendingString:@"/working-draft.txt"];
+    // 生成的压缩文件路径
+    NSString *zipFilePath = [documentPath stringByAppendingString:@"/1.zip"];
+    // 开始压缩
+    [zip CreateZipFile2:zipFilePath];
+    // 添加文件
+    [zip addFileToZip:filePath newname:@"working-draft.txt"];
+    //... 此处可以add多个文件
+    // 结束压缩
+    if( ![zip CloseZipFile2])
+    {
+        zipFilePath = @""; // 如果压缩失败，则压缩文件路径设置为空。
+    }
+    
+
+    NSString *astring = [[NSString alloc] initWithContentsOfFile:zipFilePath];
+    NSLog(@"astring:%@",astring);
+
+    
+    NSString *message = astring;
+    NSString *password = @"p4ssw0rd";
+    NSString *encryptedData = [AESCrypt encrypt:message password:password];
+    [encryptedData writeToFile: zipFilePath atomically: YES];
+    
+    message = [AESCrypt decrypt:encryptedData password:password];
+    [message writeToFile: zipFilePath atomically: YES];
+    
+    filename = @"1.zip";
+    localPath = [localDir stringByAppendingPathComponent:filename];
     
     // Upload file to Dropbox
     ExplorerViewController* explorer = [ExplorerViewController sharedExplorer];

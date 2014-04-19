@@ -5,39 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>41AF6437-1A35-4CD5-BF5C-DC020007C4A5</string>
+	<string>94EC8725-C195-43E1-8A3A-31B3A7B1EAB3</string>
 	<key>IDESourceControlProjectName</key>
 	<string>WebDisk</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>041DAF6C-2C0F-4650-9CF6-E0D8A5C6F2D0</key>
-		<string>http://www.svnchina.com/svn/webdisk</string>
+		<key>48BAF85E-A093-4465-A5CA-F9BAD2556F8C</key>
+		<string>https://github.com/happying/webdisk.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>WebDisk.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>041DAF6C-2C0F-4650-9CF6-E0D8A5C6F2D0</key>
+		<key>48BAF85E-A093-4465-A5CA-F9BAD2556F8C</key>
 		<string>../..</string>
 	</dict>
-	<key>IDESourceControlProjectRepositoryRootDictionary</key>
-	<dict>
-		<key>041DAF6C-2C0F-4650-9CF6-E0D8A5C6F2D0</key>
-		<string>http://www.svnchina.com/svn/webdisk</string>
-	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>http://www.svnchina.com/svn/webdisk/WebDisk.xcodeproj</string>
+	<string>https://github.com/happying/webdisk.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>041DAF6C-2C0F-4650-9CF6-E0D8A5C6F2D0</string>
+	<string>48BAF85E-A093-4465-A5CA-F9BAD2556F8C</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.subversion</string>
+			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>041DAF6C-2C0F-4650-9CF6-E0D8A5C6F2D0</string>
+			<string>48BAF85E-A093-4465-A5CA-F9BAD2556F8C</string>
 			<key>IDESourceControlWCCName</key>
 			<string>webdisk</string>
 		</dict>
