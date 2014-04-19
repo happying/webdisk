@@ -13,6 +13,9 @@
 #import "ZipArchive.h"
 #import "AESCrypt.h"
 
+#import "GTMDefines.h"
+#import "GTMBase64.h"
+
 
 @interface UploadViewController () <WebDiskClientDelegate, MBProgressHUDDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -95,7 +98,7 @@
     // 原文件路径
     NSString *filePath = [documentPath stringByAppendingString:@"/working-draft.txt"];
     // 生成的压缩文件路径
-    NSString *zipFilePath = [documentPath stringByAppendingString:@"/1.zip"];
+    NSString *zipFilePath = [documentPath stringByAppendingString:@"/2.zip"];
     // 开始压缩
     [zip CreateZipFile2:zipFilePath];
     // 添加文件
@@ -120,7 +123,24 @@
     message = [AESCrypt decrypt:encryptedData password:password];
     [message writeToFile: zipFilePath atomically: YES];
     
-    filename = @"1.zip";
+    //例：从本地文件沙盒中取图片并转换为NSData
+    NSString *path = [[NSBundle mainBundle] bundlePath];
+    NSString *name = [NSString stringWithFormat:@"2.zip"];
+    NSString *finalPath = [path stringByAppendingPathComponent:name];
+    NSData *Data = [NSData dataWithContentsOfFile: finalPath];
+    
+    
+    NSString* aString =  [[NSString alloc] initWithData:[GTMBase64 encodeData:Data]encoding:NSUTF8StringEncoding];
+    [aString writeToFile: zipFilePath atomically: YES];
+    
+    NSString *bString = [[NSString alloc] initWithData:[GTMBase64 decodeData:Data]encoding:NSUTF8StringEncoding];
+    
+   [bString writeToFile: zipFilePath atomically: YES];
+    
+   
+    
+    
+    filename = @"2.zip";
     localPath = [localDir stringByAppendingPathComponent:filename];
     
     // Upload file to Dropbox

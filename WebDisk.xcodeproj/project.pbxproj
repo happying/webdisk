@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		541402C31902E9A2009F1A8B /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 541402C11902E9A2009F1A8B /* GTMBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B29AFA9718FAE5C7004CDBD0 /* WebDiskAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = B29AFA9618FAE5C7004CDBD0 /* WebDiskAdapter.m */; };
 		B29AFAB318FAE6E6004CDBD0 /* AESCrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = B29AFA9B18FAE6E5004CDBD0 /* AESCrypt.m */; };
 		B29AFAB418FAE6E6004CDBD0 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = B29AFA9C18FAE6E5004CDBD0 /* LICENSE */; };
@@ -87,6 +88,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		541402C01902E9A2009F1A8B /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
+		541402C11902E9A2009F1A8B /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
+		541402C21902E9A2009F1A8B /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		B29AFA9618FAE5C7004CDBD0 /* WebDiskAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebDiskAdapter.m; path = WebDisk/WebDiskAdapter.m; sourceTree = "<group>"; };
 		B29AFA9A18FAE6E5004CDBD0 /* AESCrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AESCrypt.h; sourceTree = "<group>"; };
 		B29AFA9B18FAE6E5004CDBD0 /* AESCrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AESCrypt.m; sourceTree = "<group>"; };
@@ -224,6 +228,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		541402BF1902E98C009F1A8B /* GTMbase64 */ = {
+			isa = PBXGroup;
+			children = (
+				541402C01902E9A2009F1A8B /* GTMBase64.h */,
+				541402C11902E9A2009F1A8B /* GTMBase64.m */,
+				541402C21902E9A2009F1A8B /* GTMDefines.h */,
+			);
+			name = GTMbase64;
+			sourceTree = "<group>";
+		};
 		B29AFA9818FAE6E5004CDBD0 /* AESCrypt */ = {
 			isa = PBXGroup;
 			children = (
@@ -271,6 +285,7 @@
 		B2A174C618ED707F009CBC34 /* 3rd */ = {
 			isa = PBXGroup;
 			children = (
+				541402BF1902E98C009F1A8B /* GTMbase64 */,
 				B29AFABF18FAE85F004CDBD0 /* ZipArchive */,
 				B29AFA9818FAE6E5004CDBD0 /* AESCrypt */,
 				B2DBE18918EFF205004EE45D /* MBProgressHUD */,
@@ -589,13 +604,12 @@
 			files = (
 				B2A174FB18ED725F009CBC34 /* SDWebImageDecoder.m in Sources */,
 				B2A174D818ED7239009CBC34 /* NSString+ccWidgets.m in Sources */,
-				549081CF190189B20045EF20 /* unzip.c in Sources */,
-				549081D0190189B20045EF20 /* zip.c in Sources */,
 				B2A174FD18ED725F009CBC34 /* SDWebImageDownloaderOperation.m in Sources */,
 				B2A174FE18ED725F009CBC34 /* SDWebImageManager.m in Sources */,
 				B2DD000418ED911B00C6CA94 /* BDKNotifyHUD.m in Sources */,
 				B29AFAE218FAEC68004CDBD0 /* mztools.c in Sources */,
 				B2B16E9518EA685B00846828 /* AppDelegate.m in Sources */,
+				541402C31902E9A2009F1A8B /* GTMBase64.m in Sources */,
 				B2B16EC018EA787800846828 /* LoginWebViewController.m in Sources */,
 				B2A174FC18ED725F009CBC34 /* SDWebImageDownloader.m in Sources */,
 				B2A174F718ED725F009CBC34 /* MKAnnotationView+WebCache.m in Sources */,
@@ -612,7 +626,6 @@
 				B29AFAB318FAE6E6004CDBD0 /* AESCrypt.m in Sources */,
 				B29AFAB518FAE6E6004CDBD0 /* NSData+Base64.m in Sources */,
 				B2A174D218ED70BB009CBC34 /* PullingRefreshTableView.m in Sources */,
-				549081CE190189B20045EF20 /* mztools.c in Sources */,
 				B2A174F918ED725F009CBC34 /* SDImageCache.m in Sources */,
 				B2DBE18C18EFF205004EE45D /* MBProgressHUD.m in Sources */,
 				B2A174C018ED6DB4009CBC34 /* UploadViewController.m in Sources */,
@@ -623,7 +636,6 @@
 				B2A174F818ED725F009CBC34 /* NSData+GIF.m in Sources */,
 				B2A1750118ED725F009CBC34 /* UIImage+GIF.m in Sources */,
 				B2B16E9118EA685B00846828 /* main.m in Sources */,
-				549081D1190189B20045EF20 /* ZipArchive.mm in Sources */,
 				B2A1750418ED725F009CBC34 /* UIImageView+WebCache.m in Sources */,
 				B2A1750318ED725F009CBC34 /* UIImage+WebP.m in Sources */,
 			);
