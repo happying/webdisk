@@ -110,32 +110,28 @@
         zipFilePath = @""; // 如果压缩失败，则压缩文件路径设置为空。
     }
     
-
+    //将文件读入
     NSString *astring = [[NSString alloc] initWithContentsOfFile:zipFilePath];
     NSLog(@"astring:%@",astring);
 
-    
+    //AES加密
     NSString *message = astring;
     NSString *password = @"p4ssw0rd";
     NSString *encryptedData = [AESCrypt encrypt:message password:password];
     [encryptedData writeToFile: zipFilePath atomically: YES];
     
+    //解密
     message = [AESCrypt decrypt:encryptedData password:password];
     [message writeToFile: zipFilePath atomically: YES];
     
-    //例：从本地文件沙盒中取图片并转换为NSData
-    NSString *path = [[NSBundle mainBundle] bundlePath];
-    NSString *name = [NSString stringWithFormat:@"2.zip"];
-    NSString *finalPath = [path stringByAppendingPathComponent:name];
-    NSData *Data = [NSData dataWithContentsOfFile: finalPath];
+    //base64加密
+    NSData* datatoencode = [NSData dataWithContentsOfFile:zipFilePath];
+    datatoencode = [GTMBase64 encodeData:datatoencode];
+    [datatoencode writeToFile:zipFilePath atomically:YES];
     
-    
-    NSString* aString =  [[NSString alloc] initWithData:[GTMBase64 encodeData:Data]encoding:NSUTF8StringEncoding];
-    [aString writeToFile: zipFilePath atomically: YES];
-    
-    NSString *bString = [[NSString alloc] initWithData:[GTMBase64 decodeData:Data]encoding:NSUTF8StringEncoding];
-    
-   [bString writeToFile: zipFilePath atomically: YES];
+    //base64解码
+    NSData* decode = [GTMBase64 decodeData:datatoencode];
+    [decode writeToFile: zipFilePath atomically: YES];
     
    
     
