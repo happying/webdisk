@@ -98,7 +98,7 @@
     // 原文件路径
     NSString *filePath = [documentPath stringByAppendingString:@"/working-draft.txt"];
     // 生成的压缩文件路径
-    NSString *zipFilePath = [documentPath stringByAppendingString:@"/2.zip"];
+    NSString *zipFilePath = [documentPath stringByAppendingString:@"/Gzip.zip"];
     // 开始压缩
     [zip CreateZipFile2:zipFilePath];
     // 添加文件
@@ -111,32 +111,34 @@
     }
     
     //将文件读入
-    NSString *astring = [[NSString alloc] initWithContentsOfFile:zipFilePath];
+    NSError *error1 = nil;
+    NSString *astring = [[NSString alloc] initWithContentsOfFile:zipFilePath encoding:NSASCIIStringEncoding error:&error1];
     NSLog(@"astring:%@",astring);
 
     //AES加密
+    NSError *error2 = nil;
     NSString *message = astring;
-    NSString *password = @"p4ssw0rd";
+    NSString *password = @"passward";
     NSString *encryptedData = [AESCrypt encrypt:message password:password];
-    [encryptedData writeToFile: zipFilePath atomically: YES];
+    [encryptedData writeToFile: zipFilePath atomically:YES encoding:NSASCIIStringEncoding error:&error2];
     
     //解密
-    message = [AESCrypt decrypt:encryptedData password:password];
-    [message writeToFile: zipFilePath atomically: YES];
+//    message = [AESCrypt decrypt:encryptedData password:password];
+//    [message writeToFile: zipFilePath atomically: YES];
     
     //base64加密
     NSData* datatoencode = [NSData dataWithContentsOfFile:zipFilePath];
     datatoencode = [GTMBase64 encodeData:datatoencode];
-    [datatoencode writeToFile:zipFilePath atomically:YES];
+    [datatoencode writeToFile:zipFilePath atomically:YES ];
     
     //base64解码
-    NSData* decode = [GTMBase64 decodeData:datatoencode];
-    [decode writeToFile: zipFilePath atomically: YES];
+//    NSData* decode = [GTMBase64 decodeData:datatoencode];
+//    [decode writeToFile: zipFilePath atomically: YES];
     
    
     
     
-    filename = @"2.zip";
+    filename = @"Gzip.zip";
     localPath = [localDir stringByAppendingPathComponent:filename];
     
     // Upload file to Dropbox
