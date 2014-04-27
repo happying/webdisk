@@ -1,0 +1,73 @@
+//
+//  DemoViewController.m
+//  WebDisk
+//
+//  Created by ccnyou on 14-4-26.
+//  Copyright (c) 2014年 ccnyou. All rights reserved.
+//
+
+#import "DemoViewController.h"
+#import "ZipArchive.h"
+
+
+@interface DemoViewController () <ZipArchiveDelegate>
+
+@property (nonatomic, strong) ZipArchive* zipArchive;
+@property (nonatomic, strong) IBOutlet UITextView* textView;
+    
+@end
+
+@implementation DemoViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	// Do any additional setup after loading the view.
+    _zipArchive = [[ZipArchive alloc] init];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+    
+- (IBAction)compressTest:(id)sender {
+    NSURL* appUrl = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    NSString* demoPath = [[appUrl path] stringByAppendingPathComponent:@"music"];
+    [_zipArchive CreateZipFile2:@"big_files.zip"];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        for (int i = 0; i < 10; i++) {
+            NSString* fileName = [NSString stringWithFormat:@"%d.mp3", i];
+            NSString* filePath = [demoPath stringByAppendingPathComponent:fileName];
+            [_zipArchive addFileToZip:filePath newname:fileName];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.textView.text = [_textView.text stringByAppendingFormat:@"添加 %d 个文件完成\n", i];
+            });
+        }
+        
+        [_zipArchive CloseZipFile2];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.textView.text = [_textView.text stringByAppendingFormat:@"压缩文件完成\n"];
+        });
+    });
+    
+}
+
+- (IBAction)checksumTest:(id)sender {
+}
+    
+
+@end

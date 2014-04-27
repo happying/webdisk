@@ -1,0 +1,136 @@
+//
+//  DemoViewController.m
+//  WebDisk
+//
+//  Created by ccnyou on 14-4-26.
+//  Copyright (c) 2014年 ccnyou. All rights reserved.
+//
+
+#import "DemoViewController.h"
+#import "ZipArchive.h"
+#import "AESCrypt.h"
+#import "GTMDefines.h"
+#import "GTMBase64.h"
+
+
+@interface DemoViewController () <ZipArchiveDelegate>
+
+@property (nonatomic, strong) ZipArchive* zipArchive;
+@property (nonatomic, strong) IBOutlet UITextView* textView;
+    
+@end
+
+@implementation DemoViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	// Do any additional setup after loading the view.
+    _zipArchive = [[ZipArchive alloc] init];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+    
+- (IBAction)compressTest:(id)sender {
+    NSURL* appUrl = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    NSString* demoPath = [[appUrl path] stringByAppendingPathComponent:@"music"];
+    [[NSFileManager defaultManager] createDirectoryAtPath:demoPath withIntermediateDirectories:YES attributes:nil error:nil];
+    NSString* zipFilePath = [demoPath stringByAppendingFormat:@"/big_files.zip"];
+    [_zipArchive CreateZipFile2:zipFilePath];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        for (int i = 0; i < 10; i++) {
+            NSString* fileName = [NSString stringWithFormat:@"%d.mp3", i];
+            NSString* filePath = [demoPath stringByAppendingPathComponent:fileName];
+            [_zipArchive addFileToZip:filePath newname:fileName];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.textView.text = [_textView.text stringByAppendingFormat:@"添加 %d 个文件完成\n", i+1];
+                NSLog(@"%s line:%d 添加 %d 个文件完成\n", __FUNCTION__, __LINE__, i+1);
+            });
+        }
+        
+        [_zipArchive CloseZipFile2];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.textView.text = [_textView.text stringByAppendingFormat:@"压缩文件完成\n"];
+            NSLog(@"%s line:%d 压缩文件完成\n", __FUNCTION__, __LINE__);
+        });
+    });
+    
+}
+
+- (IBAction)checksumTest:(id)sender {
+    NSURL* appUrl = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    NSString* demoPath = [[appUrl path] stringByAppendingPathComponent:@"music"];
+    [[NSFileManager defaultManager] createDirectoryAtPath:demoPath withIntermediateDirectories:YES attributes:nil error:nil];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        for (int i = 0; i < 10; i++) {
+            NSString* fileName = [NSString stringWithFormat:@"%d.mp3", i];
+            NSString* filePath = [demoPath stringByAppendingPathComponent:fileName];
+            NSString* fileName2 = [NSString stringWithFormat:@"%d.mp3", i+10];
+            NSString* filePath2 = [demoPath stringByAppendingPathComponent:fileName2];
+            NSString* fileName3 = [NSString stringWithFormat:@"%d.mp3", i+20];
+            NSString* filePath3 = [demoPath stringByAppendingPathComponent:fileName3];
+            
+            //将文件读入
+            NSError *error1 = nil;
+            NSString *astring = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:&error1];
+            NSLog(@"astring:%@",astring);
+            NSData* datatoencode = [NSData dataWithContentsOfFile:filePath];
+            NSData* datatodecode = [NSData dataWithContentsOfFile:filePath2];
+            
+            //AES加密
+            NSError *error2 = nil;
+            NSString *message = astring;
+            NSString *password = @"passward";
+            NSString *encryptedData = [AESCrypt encryptData:datatoencode  password:password];
+            [encryptedData writeToFile: filePath2 atomically:YES encoding:NSASCIIStringEncoding error:&error2];
+            
+            //解密
+            NSError *error3 = nil;
+            message = [AESCrypt decryptData:datatodecode  password:password];
+            [message writeToFile: filePath3 atomically:YES encoding:NSASCIIStringEncoding error:&error3];
+            
+            //base64加密
+            
+            datatoencode = [GTMBase64 encodeData:datatoencode];
+            [datatoencode writeToFile:filePath2 atomically:YES ];
+            
+            //base64解码
+            NSData* decode = [GTMBase64 decodeData:datatoencode];
+            [decode writeToFile: filePath3 atomically: YES];
+            
+            
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.textView.text = [_textView.text stringByAppendingFormat:@"第 %d 个文件加密，加码完成\n", i+1];
+                NSLog(@"%s line:%d 第 %d 个文件加密，加码完成\n", __FUNCTION__, __LINE__, i+1);
+            });
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.textView.text = [_textView.text stringByAppendingFormat:@"所有文件加密加码完成，编号为10~19的文件为加密加码后文件，编号为20~29的文件为解码解密后的文件\n"];
+            NSLog(@"%s line:%d 所有文件加密加码完成，编号为10~19的文件为加密加码后文件，编号为20~29的文件为解码解密后的文件\n", __FUNCTION__, __LINE__);
+        });
+    });
+    
+}
+
+    
+
+@end

@@ -41,10 +41,23 @@
   return base64EncodedString;
 }
 
+
++ (NSString *)encryptData:(NSData *)data password:(NSString *)password {
+    NSData *encryptedData = [data AES256EncryptedDataUsingKey:[[password dataUsingEncoding:NSUTF8StringEncoding] SHA256Hash] error:nil];
+    NSString *base64EncodedString = [NSString base64StringFromData:encryptedData length:(int)[encryptedData length]];
+    return base64EncodedString;
+}
+
+
 + (NSString *)decrypt:(NSString *)base64EncodedString password:(NSString *)password {
   NSData *encryptedData = [NSData base64DataFromString:base64EncodedString];
   NSData *decryptedData = [encryptedData decryptedAES256DataUsingKey:[[password dataUsingEncoding:NSUTF8StringEncoding] SHA256Hash] error:nil];
   return [[NSString alloc] initWithData:decryptedData encoding:NSUTF8StringEncoding];
+}
+
++ (NSString *)decryptData:(NSData *)encryptedData password:(NSString *)password {
+    NSData *decryptedData = [encryptedData decryptedAES256DataUsingKey:[[password dataUsingEncoding:NSUTF8StringEncoding] SHA256Hash] error:nil];
+    return [[NSString alloc] initWithData:decryptedData encoding:NSUTF8StringEncoding];
 }
 
 @end
