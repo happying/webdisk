@@ -98,7 +98,7 @@
             NSString *astring = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:&error1];
             NSLog(@"astring:%@",astring);
             NSData* dataToEncode = [NSData dataWithContentsOfFile:filePath];
-            
+            NSData* dataToDecode = [NSData dataWithContentsOfFile:encryptedFilePath];
           
             
             //加密前md5处理
@@ -117,20 +117,8 @@
             [dataToEncode writeToFile:encryptedFilePath atomically:YES ];
             
             
-            //加密后md5处理
-            NSData* dataToDecode = [NSData dataWithContentsOfFile:encryptedFilePath];
-            NSString *md5dncode = [self getMd5_32Bit_Data:dataToDecode];
-            NSLog(@"%@",md5dncode);
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.textView.text = [_textView.text stringByAppendingFormat:@"第 %d 个文件加密，加码后的32位MD5：\n", i+1];
-                self.textView.text = [_textView.text stringByAppendingFormat:@"%@\n", md5dncode];
-                
-            });
-            
             //base64解码
-           
-            NSData* decode = [GTMBase64 decodeData:dataToDecode];
+            NSData* decode = [GTMBase64 decodeData:dataToEncode];
             [decode writeToFile: decryptedFilePath atomically: YES];
             
             //解密
@@ -144,7 +132,15 @@
                 
             });
             
+            //加密后md5处理
+            NSString *md5dncode = [self getMd5_32Bit_Data:dataToDecode];
+            NSLog(@"%@",md5dncode);
             
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.textView.text = [_textView.text stringByAppendingFormat:@"第 %d 个文件加密，加码后的32位MD5：\n", i+1];
+                self.textView.text = [_textView.text stringByAppendingFormat:@"%@\n", md5encode];
+                
+            });
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.textView.text = [_textView.text stringByAppendingFormat:@"第 %d 个文件加密，加码完成\n\n", i+1];
