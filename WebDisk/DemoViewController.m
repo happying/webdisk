@@ -167,19 +167,16 @@
     
     for (int i = 100; i > 0; i--) {
         int random = arc4random() % 10;
-        NSMutableString *string = [[NSMutableString alloc] initWithFormat:@"%d", random];
-        [text3 appendString:string];
+        [text3 appendFormat:@"%d",random];
     }
     
     for (int i = 10; i > 0; i--) {
         int random = arc4random() % 10;
-        NSString *string = [[NSString alloc] initWithFormat:@"%d", random];
-        [text2 appendString:string];
+        [text2 appendFormat:@"%d",random];
     }
     
     int random = arc4random() % 10;
-    NSString *string = [[NSString alloc] initWithFormat:@"%d", random];
-    [text1 appendString:string];
+    [text1 appendFormat:@"%d",random];
     
     
     if (fileSize >= 100) {
