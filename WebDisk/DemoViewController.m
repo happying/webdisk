@@ -154,56 +154,56 @@
 //    int size = [sender tag];
     int fileSize = 65534;
     
-    NSString *temp = @"";
+    NSMutableString *temp = [NSMutableString stringWithCapacity:65535];
     NSString *text0 = @"";
-    NSString *text1 = @"";
-    NSString *text2 = @"";
-    NSString *text3 = @"";
+    NSMutableString *text1 = [NSMutableString stringWithCapacity:2];
+    NSMutableString *text2 = [NSMutableString stringWithCapacity:11];
+    NSMutableString *text3 = [NSMutableString stringWithCapacity:101];
     
     NSString *filename = @"test.txt";
     NSString *localDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     NSLog(@"%@", localDir);
     NSString *localPath = [localDir stringByAppendingPathComponent:filename];
     
-    for (int i = 100; i>0; i--) {
+    for (int i = 100; i > 0; i--) {
         int random = arc4random() % 10;
-        NSString *string = [[NSString alloc] initWithFormat:@"%d", random];
-        text3 = [text3 stringByAppendingString:string];
+        NSMutableString *string = [[NSMutableString alloc] initWithFormat:@"%d", random];
+        [text3 appendString:string];
     }
     
-    for (int i = 10; i>0; i--) {
+    for (int i = 10; i > 0; i--) {
         int random = arc4random() % 10;
         NSString *string = [[NSString alloc] initWithFormat:@"%d", random];
-        text2 = [text2 stringByAppendingString:string];
+        [text2 appendString:string];
     }
     
     int random = arc4random() % 10;
     NSString *string = [[NSString alloc] initWithFormat:@"%d", random];
-    text1 = [text1 stringByAppendingString:string];
+    [text1 appendString:string];
     
     
     if (fileSize >= 100) {
         int num = fileSize/100;
         fileSize = fileSize - num*100;
         for (; num>0; num--) {
-            temp = [temp stringByAppendingString:text3];
+            [temp appendString:text3];
         }
     }
     if (fileSize >= 10) {
         int num = fileSize/10;
         fileSize = fileSize - num*10;
         for (; num>0; num--) {
-            temp = [temp stringByAppendingString:text2];
+            [temp appendString:text2];
         }
     }
     if (fileSize >= 0) {
         
-        for (; fileSize>0; fileSize--) {
-            temp = [temp stringByAppendingString:text1];
+        for (; fileSize > 0; fileSize--) {
+            [temp appendString:text1];
         }
     }
     
-    temp = [temp stringByAppendingString:text0];
+    [temp appendString:text0];
     NSLog(@"大小是 %d 字节", [temp length]);
     [temp writeToFile:localPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
     
