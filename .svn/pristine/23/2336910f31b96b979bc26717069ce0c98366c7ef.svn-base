@@ -87,67 +87,56 @@
             NSString* fileName = [NSString stringWithFormat:@"%d.mp3", i];
             NSString* filePath = [demoPath stringByAppendingPathComponent:fileName];
             
-            NSString* encryptedFileName = [NSString stringWithFormat:@"%d.mp3", i+10];
-            NSString* encryptedFilePath = [demoPath stringByAppendingPathComponent:encryptedFileName];
-            
             NSString* decryptedFileName = [NSString stringWithFormat:@"%d.mp3", i+20];
             NSString* decryptedFilePath = [demoPath stringByAppendingPathComponent:decryptedFileName];
             
             //将文件读入
-            NSError *error1 = nil;
-            NSString *astring = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:&error1];
-            NSLog(@"astring:%@",astring);
-            NSData* dataToEncode = [NSData dataWithContentsOfFile:filePath];
-            
+            NSData* fileData = [NSData dataWithContentsOfMappedFile:filePath];
           
             
             //加密前md5处理
-            NSString *md5encode = [self getMd5_32Bit_Data:dataToEncode];
-            NSLog(@"%@",md5encode);
+            NSString *md5encode = [self getMD5:fileData];
+            NSLog(@"%@", md5encode);
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.textView.text = [_textView.text stringByAppendingFormat:@"第 %d 个文件的32位MD5：%@\n", i+1, md5encode];
+            });
             
             //AES加密
-            NSError *error2 = nil;
-            NSString *message = astring;
-            NSString *password = @"passward";
-            NSString *encryptedData = [AESCrypt encryptData:dataToEncode  password:password];
-            [encryptedData writeToFile: encryptedFilePath atomically:YES encoding:NSASCIIStringEncoding error:&error2];
+            NSString *password = @"password";
+            NSData *encryptedData = [AESCrypt encrypt:fileData  password:password];
             
             //base64加码
-            dataToEncode = [GTMBase64 encodeData:dataToEncode];
-            [dataToEncode writeToFile:encryptedFilePath atomically:YES ];
-            
+            NSData* base64 = [GTMBase64 encodeData:encryptedData];
             
             //加密后md5处理
-            NSData* dataToDecode = [NSData dataWithContentsOfFile:encryptedFilePath];
-            NSString *md5dncode = [self getMd5_32Bit_Data:dataToDecode];
-            NSLog(@"%@",md5dncode);
+            NSString *md5decode = [self getMD5:base64];
+            NSLog(@"%@", md5decode);
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.textView.text = [_textView.text stringByAppendingFormat:@"第 %d 个文件加密，加码后的32位MD5：\n", i+1];
-                self.textView.text = [_textView.text stringByAppendingFormat:@"%@\n", md5dncode];
-                
+                self.textView.text = [_textView.text stringByAppendingFormat:@"%@\n", md5decode];
             });
             
             //base64解码
-           
-            NSData* decode = [GTMBase64 decodeData:dataToDecode];
-            [decode writeToFile: decryptedFilePath atomically: YES];
+            NSData* base64Decode = [GTMBase64 decodeData:base64];
             
             //解密
-            NSError *error3 = nil;
-            message = [AESCrypt decryptData:dataToDecode  password:password];
-            [message writeToFile: decryptedFilePath atomically:YES encoding:NSASCIIStringEncoding error:&error3];
+            NSData* decryptedData = [AESCrypt decrypt:base64Decode  password:password];
+            [decryptedData writeToFile:decryptedFilePath atomically:YES];
+            
+            //解密后md5处理
+            md5decode = [self getMD5:decryptedData];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.textView.text = [_textView.text stringByAppendingFormat:@"第 %d 个文件加密，加码前的32位MD5：\n", i+1];
-                self.textView.text = [_textView.text stringByAppendingFormat:@"%@\n", md5encode];
+                self.textView.text = [_textView.text stringByAppendingFormat:@"第 %d 个文件解密后的32位MD5：\n", i+1];
+                self.textView.text = [_textView.text stringByAppendingFormat:@"%@\n", md5decode];
                 
             });
             
             
-            
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.textView.text = [_textView.text stringByAppendingFormat:@"第 %d 个文件加密，加码完成\n\n", i+1];
+                self.textView.text = [_textView.text stringByAppendingFormat:@"第 %d 个文件测试完成\n\n", i+1];
                 NSLog(@"%s line:%d 第 %d 个文件加密，加码完成\n", __FUNCTION__, __LINE__, i+1);
             });
         }
@@ -161,10 +150,10 @@
 
 
 //32位MD5加密方式
-- (NSString*)getMd5_32Bit_Data:(NSData *)data
+- (NSString*)getMD5:(NSData *)data
 {
     unsigned char result[CC_MD5_DIGEST_LENGTH];
-    CC_MD5( data.bytes, data.length, result ); // This is the md5 call
+    CC_MD5(data.bytes, data.length, result ); // This is the md5 call
     return [NSString stringWithFormat:
             @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
             result[0], result[1], result[2], result[3],
